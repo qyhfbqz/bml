@@ -1,5 +1,5 @@
 import tensorflow as tf
-from .base import Layer
+from .base import Layer, Dense
 
 
 class MultiHeadAttention(Layer):
