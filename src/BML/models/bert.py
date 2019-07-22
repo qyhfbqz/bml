@@ -1,4 +1,4 @@
-from layers.base import Layer
+from ..layers.base import Layer
 
 
 class Bert(Layer):

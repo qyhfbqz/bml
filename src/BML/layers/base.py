@@ -1,6 +1,6 @@
 import tensorflow as tf
 from abc import ABCMeta, abstractmethod
-from util.useful import get_activation_func
+from ..util.useful import get_activation_func
 
 
 class Layer(metaclass=ABCMeta):

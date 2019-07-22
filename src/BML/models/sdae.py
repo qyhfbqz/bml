@@ -1,5 +1,5 @@
 import tensorflow as tf
-from layers.base import Layer
+from ..layers.base import Layer
 
 
 class StackedDenoiseAutoEncoder(Layer):
