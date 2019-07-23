@@ -16,8 +16,8 @@ class Layer(metaclass=ABCMeta):
 
 
 class Dense(Layer):
-    def __init__(self, input_dims, units, kernel_initer,
-                 bias_initer, use_bias=True, activation=None, partitioner=None,
+    def __init__(self, input_dims, units, kernel_initer='ones',
+                 bias_initer='zeros', use_bias=True, activation=None, partitioner=None,
                  name=None, **kwargs):
         self.activation_func = get_activation_func(activation)
         self.use_bias = use_bias
@@ -53,7 +53,7 @@ class Dense(Layer):
 
 
 class Embedding(Layer):
-    def __init__(self, num_ids, units, kernel_initer,
+    def __init__(self, num_ids, units, kernel_initer='ones',
                  name=None, partitioner=None, **kwargs):
         with tf.variable_scope(name_or_scope=name, reuse=tf.AUTO_REUSE):
             self._kernel = tf.get_variable(

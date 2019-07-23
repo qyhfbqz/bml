@@ -1,9 +1,1 @@
-# BML
-Blocks for Machine Learning models.
-
-# Distributed Tensorflow Bricks
-Dense
-
-Embedding
-
-<!-- SparseEmbedding -->
+Brickss for Machine Learning models.
