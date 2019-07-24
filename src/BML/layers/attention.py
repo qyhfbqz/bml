@@ -36,7 +36,7 @@ class MultiHeadAttention(Layer):
     def __init__(self, hidden_size, query_dims, key_dims, value_dims, heads,
                  outputs_dims, project_kernel_initer='ones', use_bias=False,
                  activation='relu', return_attention=False, name=None,
-                 **kwargs):
+                 partitioner=None, **kwargs):
         self._d_k = hidden_size // heads
         if heads * self._d_k != hidden_size:
             raise ValueError('d_k')
@@ -50,7 +50,8 @@ class MultiHeadAttention(Layer):
                 kernel_initer=project_kernel_initer,
                 name='query_project',
                 activation=activation,
-                use_bias=use_bias
+                use_bias=use_bias,
+                partitioner=partitioner
             )
 
             self._key_project = Dense(
@@ -59,7 +60,8 @@ class MultiHeadAttention(Layer):
                 kernel_initer=project_kernel_initer,
                 name='key_project',
                 activation=activation,
-                use_bias=use_bias
+                use_bias=use_bias,
+                partitioner=partitioner
             )
 
             self._value_project = Dense(
@@ -68,7 +70,8 @@ class MultiHeadAttention(Layer):
                 kernel_initer=project_kernel_initer,
                 name='value_project',
                 activation=activation,
-                use_bias=use_bias
+                use_bias=use_bias,
+                partitioner=partitioner
             )
 
             self._att_func = ProductAttention(
@@ -83,7 +86,8 @@ class MultiHeadAttention(Layer):
                 kernel_initer=project_kernel_initer,
                 name='output_project',
                 activation=activation,
-                use_bias=use_bias
+                use_bias=use_bias,
+                partitioner=partitioner
             )
 
         super(MultiHeadAttention, self).__init__(**kwargs)
