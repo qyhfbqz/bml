@@ -6,12 +6,14 @@ from .norm import LayerNorm
 
 
 class TransformerEncoder(Layer):
-    def __init__(self, name=None, partitioner=None, **kwargs):
+    def __init__(self, query_dims, key_dims, value_dims, hidden_size, heads,
+                 ffn_hidden_dims, ffn_output_dims, name=None, partitioner=None,
+                 **kwargs):
         with tf.variable_scope(name_or_scope=name, reuse=tf.AUTO_REUSE):
             self._pffn = PositionFeedForward(
-                input_dims=1,
-                hidden_dims=1,
-                outputs_dims=1,
+                input_dims=hidden_size,
+                hidden_dims=ffn_hidden_dims,
+                outputs_dims=ffn_output_dims,
                 kernel_initer='ones',
                 bias_initer='zeros',
                 name='ffn',
@@ -19,18 +21,18 @@ class TransformerEncoder(Layer):
             )
 
             self._att_layer = MultiHeadAttention(
-                hidden_size=1024,
-                query_dims=1,
-                key_dims=1,
-                value_dims=1,
-                outputs_dims=1,
-                heads=8,
+                hidden_size=hidden_size,
+                query_dims=query_dims,
+                key_dims=key_dims,
+                value_dims=value_dims,
+                outputs_dims=hidden_size,
+                heads=heads,
                 partitioner=partitioner,
                 name='multiheads'
             )
 
             self._ln_1 = LayerNorm(
-                input_dims=1,
+                input_dims=hidden_size,
                 axis=-1,
                 gamma_initer='ones',
                 beta_initer='zeros',
@@ -39,7 +41,7 @@ class TransformerEncoder(Layer):
             )
 
             self._ln_2 = LayerNorm(
-                input_dims=1,
+                input_dims=ffn_output_dims,
                 axis=-1,
                 gamma_initer='ones',
                 beta_initer='zeros',
